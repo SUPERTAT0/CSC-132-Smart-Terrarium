@@ -107,3 +107,40 @@ update_graph()
 
 # Start the main loop
 root.mainloop()
+
+##### THIS IS THE TEMP/HUMIDITY SENSOR AND LIGHTS #####
+import time
+from time import sleep
+import adafruit_dht
+import board
+import RPi.GPIO as GPIO
+
+RED_PIN=25
+BLUE_PIN=26
+GREEN_PIN=24
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(GREEN_PIN,GPIO.OUT)
+GPIO.setup(RED_PIN,GPIO.OUT)
+GPIO.setup(BLUE_PIN,GPIO.OUT)
+dht = adafruit_dht.DHT22(board.D4)
+
+try:
+    while True:
+        temperature = dht.temperature
+        humidity = dht.humidity
+        if(temperature<21):
+            print("turn up the heat!")
+            GPIO.output(GREEN_PIN, GPIO.HIGH)
+            GPIO.output(RED_PIN, GPIO.HIGH)
+            GPIO.output(BLUE_PIN, GPIO.HIGH)
+        else:
+            GPIO.output(GREEN_PIN, GPIO.LOW)
+            GPIO.output(RED_PIN, GPIO.LOW)
+            GPIO.output(BLUE_PIN, GPIO.LOW)
+            print("Temp: {:.1f} *C \t Humidity: {}%".format(temperature, humidity))
+         
+except KeyboardInterrupt:
+    print("all done")
+    GPIO.cleanup()
+    
+##################################
