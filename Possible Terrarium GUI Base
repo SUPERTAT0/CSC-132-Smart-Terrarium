@@ -108,7 +108,11 @@ update_graph()
 # Start the main loop
 root.mainloop()
 
+################################################################################
+################################################################################
+
 ##### THIS IS THE TEMP/HUMIDITY SENSOR AND LIGHTS #####
+
 import time
 from time import sleep
 import adafruit_dht
